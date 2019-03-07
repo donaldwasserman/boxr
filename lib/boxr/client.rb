@@ -238,7 +238,13 @@ module Boxr
     end
 
     def check_response_status(res, success_codes)
-      raise BoxrError.new(status: res.status, body: res.body, header: res.header) unless success_codes.include?(res.status)
+      unless success_codes.include?(res.status)
+        puts res.status
+        puts res.body
+        puts res.header
+
+        raise BoxrError.new(status: res.status, body: res.body, header: res.header)
+      end
     end
 
     def processed_response(res)
